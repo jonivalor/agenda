@@ -1,4 +1,4 @@
-rm .PHONY: clean
+.PHONY: clean
 
 all: agenda.sql
 

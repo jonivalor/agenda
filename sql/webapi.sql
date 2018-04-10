@@ -6,13 +6,13 @@
 CREATE OR REPLACE FUNCTION webapi_person_create_person (
 	IN p_person                   text
 ) RETURNS void AS $$
-DECLARE 
+DECLARE
 	v_person                      jsonb;
 	v_contact_information         contact_information;
-	
+
 BEGIN
 	v_person := p_person::jsonb;
-	
+
 	v_contact_information := contact_information (
 		v_person #>> '{contact_information, mobile_phone}',
 		v_person #>> '{contact_information, land_line}',
@@ -20,7 +20,7 @@ BEGIN
 		v_person #>> '{contact_information, address1}',
 		v_person #>> '{contact_information, address2}'
 	);
-	
+
 	PERFORM person (
 		(v_person ->> 'dni')::integer,
 		v_person ->> 'name',
@@ -36,12 +36,21 @@ $$ LANGUAGE plpgsql VOLATILE STRICT;
 CREATE OR REPLACE FUNCTION webapi_person_search_by_surname (
 	IN p_surname                  text DEFAULT '{"surname": "%"}'
 ) RETURNS text AS $$
-DECLARE 
+DECLARE
 	v_surname                     jsonb;
-	
-BEGIN 
+
+BEGIN
 	v_surname := p_surname::jsonb;
-	
+
 	RETURN array_to_json(array_agg(p))::text FROM person_search_by_surname(v_surname ->> 'surname') p;
 END;
 $$ LANGUAGE plpgsql STABLE STRICT;
+
+
+CREATE OR REPLACE FUNCTION webapi_person_get_all_persons ()
+	RETURNS text AS $$
+
+	BEGIN
+		RETURN array_to_json(array_agg(p))::text FROM person_get_all_persons() p;
+	END;
+	$$ LANGUAGE plpgsql STABLE STRICT;

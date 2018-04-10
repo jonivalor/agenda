@@ -6,9 +6,9 @@ CREATE OR REPLACE FUNCTION person (
 	IN p_birthday                 date,
 	IN p_nationality              text,
 	IN p_contact_information      contact_information
-) RETURNS person AS 
+) RETURNS person AS
 $$
-	INSERT INTO person 
+	INSERT INTO person
 		VALUES(p_dni, p_name, p_surname, p_birthday, p_nationality, p_contact_information)
 	RETURNING *;
 $$ LANGUAGE sql VOLATILE STRICT;
@@ -20,3 +20,10 @@ CREATE OR REPLACE FUNCTION person_search_by_surname (
 $$
 	SELECT * FROM person WHERE surname ilike p_surname || '%';
 $$ LANGUAGE sql STABLE STRICT;
+
+
+CREATE OR REPLACE FUNCTION person_get_all_persons ()
+	RETURNS  SETOF person AS
+	$$
+		SELECT * FROM person ORDER BY surname;
+	$$ LANGUAGE sql STABLE STRICT;
