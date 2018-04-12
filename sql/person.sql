@@ -16,14 +16,7 @@ $$ LANGUAGE sql VOLATILE STRICT;
 
 CREATE OR REPLACE FUNCTION person_search_by_surname (
 	IN p_surname                  text
-) RETURNS person AS
+) RETURNS SETOF person AS
 $$
-	SELECT * FROM person WHERE surname ilike p_surname || '%';
+	SELECT * FROM person WHERE surname ilike p_surname || '%' ORDER BY surname;
 $$ LANGUAGE sql STABLE STRICT;
-
-
-CREATE OR REPLACE FUNCTION person_get_all_persons ()
-	RETURNS  SETOF person AS
-	$$
-		SELECT * FROM person ORDER BY surname;
-	$$ LANGUAGE sql STABLE STRICT;

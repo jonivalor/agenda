@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
 import org.json.*;
 
-@WebServlet("/agenda/add/person")
+@WebServlet("/rest/person/add")
 public class AddPersonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

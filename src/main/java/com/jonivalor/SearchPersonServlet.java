@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
 import org.json.*;
 
-@WebServlet("/agenda/search/person")
+@WebServlet("/rest/person/search")
 public class SearchPersonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
