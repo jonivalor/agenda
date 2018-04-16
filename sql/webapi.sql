@@ -45,12 +45,3 @@ BEGIN
 	RETURN array_to_json(array_agg(p))::text FROM person_search_by_surname(v_surname ->> 'surname') p;
 END;
 $$ LANGUAGE plpgsql STABLE STRICT;
-
-
-CREATE OR REPLACE FUNCTION webapi_person_get_all_persons ()
-	RETURNS text AS $$
-
-	BEGIN
-		RETURN array_to_json(array_agg(p))::text FROM person_get_all_persons() p;
-	END;
-	$$ LANGUAGE plpgsql STABLE STRICT;

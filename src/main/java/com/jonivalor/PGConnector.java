@@ -90,15 +90,15 @@ public final class PGConnector {
 		}
 	}
 
-	public List<Map<String, Object>> executeQuery(String userName, String userPassword, String queryString) throws Exception {
+	public ArrayList<HashMap<String, Object>> executeQuery(String userName, String userPassword, String queryString) throws Exception {
 		try {
 			connect(userName, userPassword);
 
 			Statement Query = null;
 			ResultSet result = null;
 
-			List<Map<String, Object>> resultList = new ArrayList<>();
-			Map<String, Object> row = null;
+			ArrayList<HashMap<String, Object>> resultList = new ArrayList<>();
+			HashMap<String, Object> row = null;
 
 			try {
 				Query = dbConnection.createStatement();

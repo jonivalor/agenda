@@ -1,5 +1,9 @@
 package com.jonivalor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -28,7 +32,19 @@ public class SearchPersonServlet extends HttpServlet {
 		try {
 			String queryString = "SELECT webapi_person_search_by_surname ('" + surname.toString() + "')";
 
-			pgConnector.execute("jvalor", "jvalor1234", queryString);
+      ArrayList<HashMap<String, Object>> queryResult = new ArrayList<HashMap<String, Object>>();
+
+			queryResult = pgConnector.executeQuery("jvalor", "jvalor1234", queryString);
+
+      JSONObject resultOutput = null;
+
+      for(HashMap<String, Object> result : queryResult) {
+        for(String key : result.keySet()) {
+          resultOutput = new JSONObject (String.valueOf(result.get(key)));
+        }
+      }
+
+      pw.print(resultOutput.toString());
 
 		} catch (Exception e) {
 			System.out.println(e);
