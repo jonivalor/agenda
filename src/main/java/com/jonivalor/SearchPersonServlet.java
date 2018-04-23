@@ -36,11 +36,11 @@ public class SearchPersonServlet extends HttpServlet {
 
 			queryResult = pgConnector.executeQuery("jvalor", "jvalor1234", queryString);
 
-      JSONObject resultOutput = null;
+      JSONArray resultOutput = null;
 
       for(HashMap<String, Object> result : queryResult) {
         for(String key : result.keySet()) {
-          resultOutput = new JSONObject (String.valueOf(result.get(key)));
+          resultOutput = new JSONArray (String.valueOf(result.get(key)));
         }
       }
 
